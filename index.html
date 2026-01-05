@@ -1,0 +1,920 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NIW 이니셜 평가 분석표(관리자) | Law Office of Hong-min Jun</title>
+  <meta name="description" content="NIW 이니셜 평가 분석표 관리자용(케이스 발행) - Law Office of Hong-min Jun" />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --panel:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:rgba(17,24,39,.12);
+
+      --primary:#5b8cff;   /* pastel blue */
+      --primary2:#3d6df2;
+      --accent:#f5d18a;    /* pastel gold */
+      --accent2:#e8b65e;
+
+      --ok:#16a34a;
+      --warn:#d97706;
+      --danger:#dc2626;
+
+      --shadow: 0 12px 36px rgba(17,24,39,.10);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
+      background: var(--bg);
+      color:var(--text);
+    }
+    a{color:inherit; text-decoration:none}
+    .container{max-width:1120px; margin:0 auto; padding:0 18px}
+
+    header{padding:18px 0 10px}
+    .brandbar{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+      padding:14px 16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.92);
+      border-radius:20px;
+      box-shadow: var(--shadow);
+    }
+    .brand-left{display:flex; align-items:flex-start; gap:12px; min-width: 260px;}
+    .brand-title{display:flex; flex-direction:column; gap:3px}
+    .brand-title .name{font-weight:950; letter-spacing:-.2px; font-size:16px; line-height:1.2}
+    .brand-title .motto{color:var(--muted); font-size:12.5px; line-height:1.25}
+    .brand-title .licenses{color:rgba(17,24,39,.70); font-size:12px; line-height:1.25}
+    .brand-right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .contact-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.03);
+      color:rgba(17,24,39,.78);
+      font-size:12px; white-space:nowrap;
+    }
+    .contact-pill strong{color:var(--text)}
+    .contact-pill .dot{
+      width:6px; height:6px; border-radius:50%;
+      background: var(--accent2);
+      box-shadow:0 0 0 5px rgba(232,182,94,.18);
+    }
+
+    .pagehead{padding:14px 0 6px}
+    h1{margin:0; font-size:22px; letter-spacing:-.4px}
+    .subtitle{
+      margin-top:6px;
+      color:rgba(17,24,39,.70);
+      font-size:13px; line-height:1.45; max-width: 980px;
+    }
+
+    .formrow{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:10px;
+    }
+    @media (min-width: 980px){
+      .formrow{grid-template-columns: 1.2fr 1.2fr 1fr;}
+    }
+    .field{
+      display:flex; flex-direction:column; gap:6px;
+      padding:10px 12px;
+      border-radius:16px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+    }
+    .field label{
+      font-size:12px;
+      color:rgba(17,24,39,.72);
+      font-weight:900;
+      letter-spacing:-.1px;
+    }
+    .field input{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(17,24,39,.15);
+      background:#fff;
+      color:var(--text);
+      outline:none;
+      font-size:13px;
+    }
+    .field input::placeholder{color:rgba(17,24,39,.40)}
+    .hint{margin-top:6px; font-size:12px; color:rgba(17,24,39,.55)}
+    .hint strong{color:rgba(17,24,39,.82)}
+
+    .topbar{
+      margin-top:12px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px; border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      color:rgba(17,24,39,.72);
+      font-size:12px;
+    }
+    .pill strong{color:var(--text)}
+    .status{display:inline-flex; align-items:center; gap:8px; font-weight:950; color:var(--text)}
+    .status-dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--warn);
+      box-shadow:0 0 0 5px rgba(217,119,6,.14);
+    }
+    .status-dot.ok{background:var(--ok); box-shadow:0 0 0 5px rgba(22,163,74,.14)}
+    .status-dot.bad{background:var(--danger); box-shadow:0 0 0 5px rgba(220,38,38,.14)}
+
+    .btn{
+      cursor:pointer;
+      border:1px solid rgba(17,24,39,.15);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
+      transition:.15s;
+      box-shadow: 0 10px 24px rgba(17,24,39,.07);
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(91,140,255,.95), rgba(61,109,242,.88));
+      border-color:rgba(61,109,242,.35);
+      color:#fff;
+    }
+    .btn.gold{
+      background:linear-gradient(180deg, rgba(245,209,138,.98), rgba(232,182,94,.92));
+      border-color:rgba(232,182,94,.45);
+      color:#111827;
+    }
+    .btn.danger{
+      background:linear-gradient(180deg, rgba(239,68,68,.95), rgba(220,38,38,.88));
+      border-color:rgba(220,38,38,.35);
+      color:#fff;
+    }
+
+    main{padding:10px 0 44px}
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+    }
+    @media (min-width: 980px){
+      .grid{grid-template-columns: 1fr 1fr;}
+    }
+
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:14px 14px 12px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:15px;
+      letter-spacing:-.1px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .score{
+      color:rgba(17,24,39,.70);
+      font-size:12px;
+      font-weight:900;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    /* table layout 개선(빈칸 줄이고, 메모 폭 안정화) */
+    table{width:100%; border-collapse:collapse; font-size:13px; table-layout:fixed}
+    th,td{
+      padding:10px 8px;
+      border-top:1px solid rgba(17,24,39,.08);
+      vertical-align:top;
+    }
+    th{
+      text-align:left;
+      color:rgba(17,24,39,.60);
+      font-weight:900;
+    }
+    th:nth-child(1), td:nth-child(1){width:44%;}
+    th:nth-child(2), td:nth-child(2){width:72px;}
+    th:nth-child(3), td:nth-child(3){width:auto;}
+    td:nth-child(3){color:rgba(17,24,39,.78)}
+    input[type="checkbox"]{
+      width:18px; height:18px;
+      accent-color: var(--primary2);
+      transform: translateY(2px);
+      cursor:pointer;
+    }
+
+    /* Summary 영역 공백 줄이고 안정화 */
+    .summary{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+      margin-bottom:12px;
+      align-items:start;
+    }
+    @media (min-width: 980px){
+      .summary{grid-template-columns: 1.35fr .65fr;}
+    }
+    .kpi{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+    .result{
+      margin-top:10px;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      line-height:1.5;
+      color:rgba(17,24,39,.80);
+      font-size:13px;
+    }
+    textarea{
+      width:100%;
+      min-height:88px;
+      border-radius:14px;
+      border:1px solid rgba(17,24,39,.15);
+      background:#fff;
+      color:var(--text);
+      padding:10px;
+      font-size:13px;
+      line-height:1.45;
+      outline:none;
+    }
+    textarea::placeholder{color:rgba(17,24,39,.45)}
+    .tiny{font-size:11.5px; color:rgba(17,24,39,.55)}
+    .divider{height:1px; background:rgba(17,24,39,.08); margin:10px 0}
+    .tag{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      color:rgba(17,24,39,.70);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    /* paid blocks */
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(91,140,255,.30);
+      background:rgba(91,140,255,.10);
+      color:rgba(17,24,39,.85);
+      font-size:12px;
+      font-weight:950;
+      margin-top:2px;
+    }
+    .paid{
+      border-radius:14px;
+      border:1px dashed rgba(232,182,94,.70);
+      background:rgba(245,209,138,.18);
+      padding:14px 16px; /* 메모 좌우 여백 넓힘 */
+      margin-top:10px;
+      color:rgba(17,24,39,.92);
+      font-size:13px;
+      line-height:1.6;
+      word-break:break-word;
+    }
+
+    /* 모달 */
+    .modal{
+      position:fixed; inset:0; display:none;
+      align-items:center; justify-content:center;
+      padding:16px;
+      background:rgba(0,0,0,.40);
+      z-index:9999;
+    }
+    .modal-box{
+      width:100%;
+      max-width:560px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.35);
+      background:#fff;
+      box-shadow: 0 24px 80px rgba(0,0,0,.22);
+      padding:14px;
+    }
+    .modal-title{
+      font-weight:950; letter-spacing:-.2px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:6px;
+    }
+    .modal-desc{color:rgba(17,24,39,.80); font-size:13px; line-height:1.55; margin-bottom:10px;}
+    .modal-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+    .xbtn{
+      border:1px solid rgba(17,24,39,.18);
+      background:rgba(17,24,39,.03);
+      border-radius:12px;
+      padding:6px 10px;
+      cursor:pointer;
+      color:rgba(17,24,39,.78);
+      font-weight:900;
+    }
+
+    footer{padding:10px 0 26px; color:rgba(17,24,39,.60); font-size:12px}
+
+    @media print{
+      body{background:white;color:black}
+      header .topbar .btn,
+      header .topbar .pill{display:none !important}
+      .modal{display:none !important}
+      .card{box-shadow:none}
+      textarea{border:1px solid #aaa}
+    }
+  </style>
+</head>
+
+<body>
+  <header class="container">
+    <div class="brandbar">
+      <div class="brand-left">
+        <div class="brand-title">
+          <div class="name">Law Office of Hong-min Jun</div>
+          <div class="motto">Attorneys for foreign born individuals and small business owners!</div>
+          <div class="licenses">Indiana · Illinois Attorney</div>
+        </div>
+      </div>
+      <div class="brand-right">
+        <span class="contact-pill"><span class="dot"></span><strong>askus@junlawfirm.com</strong></span>
+        <span class="contact-pill">☎ <strong>847-660-4233</strong></span>
+        <span class="contact-pill">☎ <strong>317-701-2768</strong></span>
+      </div>
+    </div>
+
+    <div class="pagehead">
+      <h1>NIW 이니셜 평가 분석표 <span class="tag">관리자용</span> <span class="tag">케이스 발행(Publish)</span></h1>
+      <div class="subtitle">
+        이 페이지는 <strong>변호사님이 내부 분석</strong>을 입력하고, 케이스를 Worker KV에 저장한 뒤,
+        의뢰인에게는 <strong>case.html 링크</strong>를 보내기 위한 관리자 화면입니다.
+      </div>
+
+      <div class="formrow">
+        <div class="field">
+          <label for="clientName">고객명 (Client Name) <span style="color:rgba(217,119,6,.95)">*</span></label>
+          <input id="clientName" placeholder="예: 홍길동" autocomplete="name" />
+          <div class="hint">※ 케이스 저장/발행 시 <strong>필수</strong>입니다.</div>
+        </div>
+        <div class="field">
+          <label for="clientEmail">이메일 (Email) <span style="color:rgba(217,119,6,.95)">*</span></label>
+          <input id="clientEmail" placeholder="예: client@email.com" autocomplete="email" />
+          <div class="hint">※ 케이스 저장/발행 시 <strong>필수</strong>입니다.</div>
+        </div>
+        <div class="field">
+          <label for="invoiceNo">Square Invoice 번호 (선택)</label>
+          <input id="invoiceNo" placeholder="예: INV-12345 또는 Square Invoice ID" />
+          <div class="hint">※ 결제 추적용(선택)</div>
+        </div>
+      </div>
+
+      <div class="topbar">
+        <span class="pill">전체 점수: <strong id="totalScore">0</strong>/<span id="totalMax">0</span></span>
+        <span class="pill">상태: <span class="status"><span class="status-dot" id="statusDot"></span><span id="statusText">평가 진행</span></span></span>
+
+        <button class="btn" id="exportBtn" type="button">📄 결과 복사</button>
+        <button class="btn" type="button" onclick="window.print()">🖨 인쇄</button>
+        <button class="btn danger" id="resetBtn" type="button">↺ 리셋</button>
+
+        <button class="btn gold" id="adminUnlockBtn" type="button">🔑 관리자 입력 열기</button>
+        <button class="btn primary" id="publishBtn" type="button">🚀 케이스 발행(Publish)</button>
+
+        <span class="tiny">※ Publish는 Worker KV에 저장됩니다. 의뢰인에게는 case.html 링크를 보내세요.</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card summary">
+      <div>
+        <h2>종합 초기 판단 <span class="score" id="fitBadge">-</span></h2>
+
+        <div class="kpi">
+          <span class="pill">적합성: <strong id="fitLevel">-</strong></span>
+          <span class="pill">보완 후 가능성: <strong id="improveLevel">-</strong></span>
+          <span class="pill">EB-1 전환: <strong id="eb1Level">-</strong></span>
+          <span class="pill">전략적 접근: <strong id="strategyNeed">-</strong></span>
+        </div>
+
+        <div class="result" id="autoResult">체크를 진행하면 자동 요약이 업데이트됩니다.</div>
+
+        <div class="divider"></div>
+
+        <label class="subtitle" for="overallNote" style="display:block;margin-top:4px;">
+          총평 메모(무료 공개 영역 / 의뢰인에게 보여줄 요약):
+        </label>
+        <textarea id="overallNote" placeholder="예) 핵심 강점 / 가장 큰 리스크 / 보완 계획 요약"></textarea>
+
+        <div class="tiny" style="margin-top:8px;">
+          운영 구조: 무료=점수/요약 제공 → 유료=전략 메모 + 보완 체크리스트(증거 우선순위/추천서 방향)
+        </div>
+      </div>
+
+      <div>
+        <h2>유료 내용 입력(관리자 전용) <span class="score" id="adminState">CLOSED</span></h2>
+        <div class="tiny" style="margin-top:-4px;">※ ?admin=1 + 관리자 비밀번호(ADMIN_SECRET)로 열립니다.</div>
+
+        <div style="margin-top:10px" id="adminEditor" hidden>
+          <div class="badge">1) 전략 메모(유료) - HTML 허용</div>
+          <textarea id="paidStrategyInput" placeholder="여기에 사건별 유료 전략 메모를 입력/붙여넣기(HTML 가능)"></textarea>
+
+          <div style="height:10px"></div>
+          <div class="badge">2) 보완 체크리스트(유료) - HTML 허용</div>
+          <textarea id="paidChecklistInput" placeholder="여기에 사건별 유료 보완 체크리스트를 입력/붙여넣기(HTML 가능)"></textarea>
+
+          <div class="tiny" style="margin-top:8px;">
+            * Publish 시 Worker KV(CASES)에 함께 저장됩니다. 의뢰인은 Unlock Code로만 열람합니다.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid" id="sections"></section>
+
+    <footer>
+      <div style="margin-top:10px">
+        © Law Office of Hong-min Jun. This tool provides an initial evaluation framework and does not constitute legal advice.
+      </div>
+    </footer>
+  </main>
+
+  <!-- Popup Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div class="modal-title">
+        <span id="modalTitle">안내</span>
+        <button class="xbtn" id="modalClose">닫기</button>
+      </div>
+      <div class="modal-desc" id="modalDesc">-</div>
+      <div class="modal-actions">
+        <button class="btn" id="modalOk">확인</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // =========================================================
+  // 0) Worker URL (본인 Worker URL로 설정)
+  // =========================================================
+  const WORKER_BASE_URL = "https://rough-thunder-0931.junlawfirm.workers.dev";
+
+  // =========================================================
+  // 1) 분석표 데이터(문항/타이틀은 그대로 유지)
+  // =========================================================
+  const DATA = [
+    { id:"sec1", title:"1) 기본 자격 요건 (Threshold Eligibility)", items:[
+      { text:"석사 이상 학위 보유", memo:"(유료 메모는 케이스 저장용이 아니라, 섹션별 기본 가이드로만 사용하려면 case.html 쪽에서 활용 가능)", defaultChecked:true },
+      { text:"학사 + 5년 이상 점진적 경력", memo:"", defaultChecked:false },
+      { text:"예외적 능력(EB-2) 주장 가능", memo:"", defaultChecked:true },
+    ]},
+    { id:"sec2", title:"2) Proposed Endeavor 명확성", items:[
+      { text:"Endeavor가 구체적으로 정의됨", memo:"", defaultChecked:true },
+      { text:"단순 계획·희망이 아님", memo:"", defaultChecked:true },
+      { text:"과거 성과 → 미래 기여 연결", memo:"", defaultChecked:true },
+      { text:"미국 내 수행 가능성(환경/협업)", memo:"", defaultChecked:true },
+    ]},
+    { id:"sec3", title:"3) National Importance (국가적 중요성)", items:[
+      { text:"산업/사회적 문제와 직접 연결", memo:"", defaultChecked:true },
+      { text:"지역 한정이 아닌 파급효과", memo:"", defaultChecked:true },
+      { text:"정책·안전·윤리 등 공공성 요소", memo:"", defaultChecked:true },
+      { text:"‘중요 산업 일반론’에 머물지 않음", memo:"", defaultChecked:true },
+    ]},
+    { id:"sec4", title:"4) 전문성 및 독자성", items:[
+      { text:"해당 분야 전문 경력", memo:"", defaultChecked:true },
+      { text:"유사 전문가 대비 차별점", memo:"", defaultChecked:true },
+      { text:"학위 외 전문성 증거(구현/지표/툴)", memo:"", defaultChecked:true },
+      { text:"대체 가능성 낮음(희소한 결합역량)", memo:"", defaultChecked:true },
+    ]},
+    { id:"sec5", title:"5) 과거 성과의 증거력", items:[
+      { text:"동료평가 논문/프로시딩", memo:"", defaultChecked:true },
+      { text:"연구 산출(프로토타입/코드/툴킷)", memo:"", defaultChecked:true },
+      { text:"발표/초청/패널 등 외부 검증", memo:"", defaultChecked:true },
+      { text:"연구 프로그램(로드맵) 일관성", memo:"", defaultChecked:true },
+    ]},
+    { id:"sec6", title:"6) 추천서 전략", items:[
+      { text:"독립 추천인 확보(이해관계 최소)", memo:"", defaultChecked:true },
+      { text:"전문성 직접 검증 가능한 추천인", memo:"", defaultChecked:true },
+      { text:"Endeavor와 정확히 연결", memo:"", defaultChecked:true },
+      { text:"형식적 표현 최소화(구체성)", memo:"", defaultChecked:true },
+    ]},
+    { id:"sec7", title:"7) 3rd Prong (Labor Cert 면제 타당성)", items:[
+      { text:"고용주 특정 없이도 수행 가능", memo:"", defaultChecked:true },
+      { text:"Labor Cert로 공익 실현이 지연/제한", memo:"", defaultChecked:true },
+      { text:"개인 역량 중심의 공익 논리", memo:"", defaultChecked:true },
+      { text:"미국에 더 큰 이익(비교 논리 포함)", memo:"", defaultChecked:true },
+    ]},
+    { id:"sec8", title:"8) 리스크 요소 점검", items:[
+      { text:"Endeavor가 과도하게 추상적이지 않음", memo:"", defaultChecked:true },
+      { text:"미래 계획만 강조하지 않음", memo:"", defaultChecked:true },
+      { text:"‘비주류’를 ‘선구적 연구 프로그램’으로 정제", memo:"", defaultChecked:true },
+      { text:"논문 수 공격 대비(질·외부검증)", memo:"", defaultChecked:true },
+    ]},
+  ];
+
+  const sectionsEl = document.getElementById("sections");
+
+  function escapeHtml(s){
+    return String(s || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  function render(){
+    sectionsEl.innerHTML = "";
+    for(const sec of DATA){
+      const card = document.createElement("section");
+      card.className = "card";
+      card.id = sec.id;
+
+      const max = sec.items.length;
+      const header = document.createElement("h2");
+      header.innerHTML = `${sec.title} <span class="score" id="${sec.id}-score">0/${max}</span>`;
+      card.appendChild(header);
+
+      const table = document.createElement("table");
+      table.innerHTML = `
+        <thead>
+          <tr>
+            <th>항목</th>
+            <th>체크</th>
+            <th>메모(관리자 내부 입력은 위에서 별도 저장)</th>
+          </tr>
+        </thead>
+      `;
+
+      const tbody = document.createElement("tbody");
+      sec.items.forEach((it, idx) => {
+        const cbId = `${sec.id}-cb-${idx}`;
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${escapeHtml(it.text)}</td>
+          <td><input type="checkbox" id="${cbId}"></td>
+          <td>
+            <div class="tiny" style="padding:6px 0 0;">
+              ${it.memo ? escapeHtml(it.memo) : "—"}
+            </div>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+
+      table.appendChild(tbody);
+      card.appendChild(table);
+      sectionsEl.appendChild(card);
+    }
+
+    DATA.forEach(sec=>{
+      sec.items.forEach((it, idx)=>{
+        const cb = document.getElementById(`${sec.id}-cb-${idx}`);
+        cb.checked = !!it.defaultChecked;
+        cb.addEventListener("change", updateAll);
+      });
+    });
+
+    updateAll();
+  }
+
+  function sectionScore(secId){
+    const sec = DATA.find(s=>s.id===secId);
+    let checked = 0;
+    sec.items.forEach((_, idx)=>{
+      const cb = document.getElementById(`${secId}-cb-${idx}`);
+      if(cb && cb.checked) checked++;
+    });
+    return {checked, max: sec.items.length};
+  }
+
+  function topSections(n){
+    const arr = DATA.map(sec=>{
+      const s = sectionScore(sec.id);
+      return {title: sec.title, ratio: s.max? s.checked/s.max : 0};
+    }).sort((a,b)=>b.ratio-a.ratio);
+    return arr.slice(0,n).map(x=>x.title);
+  }
+
+  function bottomSections(n){
+    const arr = DATA.map(sec=>{
+      const s = sectionScore(sec.id);
+      return {title: sec.title, ratio: s.max? s.checked/s.max : 0};
+    }).sort((a,b)=>a.ratio-b.ratio);
+    return arr.slice(0,n).map(x=>x.title);
+  }
+
+  function updateAll(){
+    let totalChecked = 0;
+    let totalMax = 0;
+
+    for(const sec of DATA){
+      const {checked, max} = sectionScore(sec.id);
+      totalChecked += checked;
+      totalMax += max;
+      const badge = document.getElementById(`${sec.id}-score`);
+      if(badge) badge.textContent = `${checked}/${max}`;
+    }
+
+    document.getElementById("totalScore").textContent = totalChecked;
+    document.getElementById("totalMax").textContent = totalMax;
+
+    const ratio = totalMax ? (totalChecked/totalMax) : 0;
+
+    const statusDot = document.getElementById("statusDot");
+    const statusText = document.getElementById("statusText");
+    const fitBadge = document.getElementById("fitBadge");
+
+    let status = "보완 필요";
+    let dot = "bad";
+    let badge = "Needs work";
+
+    if(ratio >= 0.85){ status = "매우 강함"; dot = "ok"; badge = "Strong"; }
+    else if(ratio >= 0.65){ status = "충분히 가능"; dot = ""; badge = "Viable"; }
+
+    statusText.textContent = status;
+    statusDot.className = "status-dot" + (dot==="ok" ? " ok" : dot==="bad" ? " bad" : "");
+    fitBadge.textContent = badge;
+
+    const fitLevel = document.getElementById("fitLevel");
+    const improveLevel = document.getElementById("improveLevel");
+    const eb1Level = document.getElementById("eb1Level");
+    const strategyNeed = document.getElementById("strategyNeed");
+
+    if(ratio >= 0.85){
+      fitLevel.textContent = "매우 높음";
+      improveLevel.textContent = "높음";
+      eb1Level.textContent = "중장기 검토 가능";
+      strategyNeed.textContent = "예(서술·추천서)";
+    } else if(ratio >= 0.65){
+      fitLevel.textContent = "보통~높음";
+      improveLevel.textContent = "보완 시 높음";
+      eb1Level.textContent = "추가 실적 필요";
+      strategyNeed.textContent = "예";
+    } else {
+      fitLevel.textContent = "낮음";
+      improveLevel.textContent = "불확실";
+      eb1Level.textContent = "현 단계 어려움";
+      strategyNeed.textContent = "필수";
+    }
+
+    document.getElementById("autoResult").innerHTML = `
+      현재 체크 점수는 <strong>${totalChecked}/${totalMax}</strong>입니다.<br>
+      • 강점(상위): ${topSections(3).join(", ")}<br>
+      • 보완 우선(하위): ${bottomSections(2).join(", ")}<br>
+      <div class="tiny" style="margin-top:6px;">
+        ※ 유료 영역(전략 메모/체크리스트)은 케이스별로 위 “관리자 전용” 입력란에 작성한 내용이 저장됩니다.
+      </div>
+    `;
+  }
+
+  // =========================
+  // Modal
+  // =========================
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalClose = document.getElementById("modalClose");
+  const modalOk = document.getElementById("modalOk");
+
+  function showModal(title, desc){
+    modalTitle.textContent = title;
+    modalDesc.innerHTML = desc;
+    modal.style.display = "flex";
+  }
+  function hideModal(){ modal.style.display = "none"; }
+  modalClose.addEventListener("click", hideModal);
+  modalOk.addEventListener("click", hideModal);
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) hideModal(); });
+
+  // =========================================================
+  // 2) 관리자 입력 열기: ?admin=1 + ADMIN_SECRET 필요(Worker에서 검증)
+  // =========================================================
+  const isAdminQuery = new URLSearchParams(location.search).get("admin") === "1";
+  const ADMIN_SECRET_KEY = "junlawfirm_admin_secret_v1";
+
+  function openAdminEditor(){
+    if(!isAdminQuery){
+      showModal("관리자 모드", "주소 끝에 <strong>?admin=1</strong>을 붙여 접속하세요. 예) index.html?admin=1");
+      return;
+    }
+    const saved = sessionStorage.getItem(ADMIN_SECRET_KEY) || "";
+    const v = prompt("관리자 비밀번호(ADMIN_SECRET)를 입력하세요:", saved);
+    if(!v) return;
+    sessionStorage.setItem(ADMIN_SECRET_KEY, v.trim());
+
+    document.getElementById("adminEditor").hidden = false;
+    document.getElementById("adminState").textContent = "OPEN";
+    showModal("관리자 입력 활성화", "유료 내용 입력란이 열렸습니다. 작성 후 <strong>Publish</strong>를 누르세요.");
+  }
+
+  document.getElementById("adminUnlockBtn").addEventListener("click", openAdminEditor);
+
+  // =========================================================
+  // 3) 필수값 검사
+  // =========================================================
+  function validateRequiredClientFields(){
+    const name = (document.getElementById("clientName").value || "").trim();
+    const email = (document.getElementById("clientEmail").value || "").trim();
+
+    if(!name){
+      showModal("입력 필요", "<strong>고객명</strong>을 먼저 입력해 주세요.");
+      document.getElementById("clientName").focus();
+      return false;
+    }
+    if(!email){
+      showModal("입력 필요", "<strong>이메일</strong>을 먼저 입력해 주세요.");
+      document.getElementById("clientEmail").focus();
+      return false;
+    }
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+      showModal("이메일 확인", "이메일 형식이 올바른지 확인해 주세요.");
+      document.getElementById("clientEmail").focus();
+      return false;
+    }
+    return true;
+  }
+
+  // =========================================================
+  // 4) 내보내기(클립보드)
+  // =========================================================
+  document.getElementById("exportBtn").addEventListener("click", ()=>{
+    const totalChecked = Number(document.getElementById("totalScore").textContent || 0);
+    const totalMax = Number(document.getElementById("totalMax").textContent || 0);
+
+    const name = (document.getElementById("clientName").value || "").trim();
+    const email = (document.getElementById("clientEmail").value || "").trim();
+    const inv = (document.getElementById("invoiceNo").value || "").trim();
+
+    const status = document.getElementById("statusText").textContent;
+    const note = (document.getElementById("overallNote").value || "").trim();
+
+    let lines = [];
+    lines.push("Law Office of Hong-min Jun | NIW 이니셜 평가(관리자) 결과");
+    lines.push(`- 고객명: ${name || "(미입력)"}`);
+    lines.push(`- 이메일: ${email || "(미입력)"}`);
+    lines.push(`- Square Invoice 번호: ${inv || "(미입력)"}`);
+    lines.push("");
+    lines.push(`- 전체 점수: ${totalChecked}/${totalMax}`);
+    lines.push(`- 상태: ${status}`);
+    lines.push(`- 적합성: ${document.getElementById("fitLevel").textContent}`);
+    lines.push(`- 보완 후 가능성: ${document.getElementById("improveLevel").textContent}`);
+    lines.push(`- EB-1 전환: ${document.getElementById("eb1Level").textContent}`);
+    lines.push(`- 전략적 접근: ${document.getElementById("strategyNeed").textContent}`);
+    lines.push("");
+    lines.push("섹션별 점수:");
+    DATA.forEach(sec=>{
+      const s = sectionScore(sec.id);
+      lines.push(`- ${sec.title}: ${s.checked}/${s.max}`);
+    });
+    if(note){
+      lines.push("");
+      lines.push("총평 메모(무료 공개):");
+      lines.push(note);
+    }
+
+    const text = lines.join("\n");
+    navigator.clipboard?.writeText(text).then(()=>{
+      showModal("복사 완료", "결과가 클립보드에 복사되었습니다.");
+    }).catch(()=>{
+      prompt("복사해서 사용하세요:", text);
+    });
+  });
+
+  // =========================================================
+  // 5) 리셋
+  // =========================================================
+  document.getElementById("resetBtn").addEventListener("click", ()=>{
+    DATA.forEach(sec=>{
+      sec.items.forEach((it, idx)=>{
+        const cb = document.getElementById(`${sec.id}-cb-${idx}`);
+        if(cb) cb.checked = !!it.defaultChecked;
+      });
+    });
+    document.getElementById("overallNote").value = "";
+    document.getElementById("paidStrategyInput").value = "";
+    document.getElementById("paidChecklistInput").value = "";
+
+    updateAll();
+    showModal("리셋 완료", "체크/메모가 초기화되었습니다.");
+  });
+
+  // =========================================================
+  // 6) Publish: Worker KV(CASES)에 저장
+  //    - 관리자 비밀번호는 header: X-Admin-Secret
+  // =========================================================
+  function collectCaseData(){
+    const sections = DATA.map(sec=>{
+      const items = sec.items.map((it, idx)=>{
+        const cb = document.getElementById(`${sec.id}-cb-${idx}`);
+        return {
+          text: it.text,
+          checked: !!(cb && cb.checked)
+        };
+      });
+      const s = sectionScore(sec.id);
+      return { id: sec.id, title: sec.title, score: s, items };
+    });
+
+    const totalChecked = Number(document.getElementById("totalScore").textContent || 0);
+    const totalMax = Number(document.getElementById("totalMax").textContent || 0);
+    const status = document.getElementById("statusText").textContent;
+
+    return {
+      summary: {
+        totalChecked, totalMax, status,
+        fitLevel: document.getElementById("fitLevel").textContent,
+        improveLevel: document.getElementById("improveLevel").textContent,
+        eb1Level: document.getElementById("eb1Level").textContent,
+        strategyNeed: document.getElementById("strategyNeed").textContent,
+        autoResultHtml: document.getElementById("autoResult").innerHTML
+      },
+      sections,
+      overallNote: (document.getElementById("overallNote").value || "").trim()
+    };
+  }
+
+  async function publishCase(){
+    if(!validateRequiredClientFields()) return;
+
+    const name = (document.getElementById("clientName").value || "").trim();
+    const email = (document.getElementById("clientEmail").value || "").trim();
+    const inv = (document.getElementById("invoiceNo").value || "").trim();
+
+    const adminSecret = (sessionStorage.getItem(ADMIN_SECRET_KEY) || "").trim();
+    if(!adminSecret){
+      showModal("관리자 인증 필요", "먼저 <strong>관리자 입력 열기</strong>에서 ADMIN_SECRET를 입력해 주세요.");
+      return;
+    }
+
+    const paidContent = {
+      strategyMemoHtml: (document.getElementById("paidStrategyInput").value || "").trim(),
+      checklistHtml: (document.getElementById("paidChecklistInput").value || "").trim()
+    };
+
+    const caseData = collectCaseData();
+
+    try{
+      const resp = await fetch(`${WORKER_BASE_URL}/publish`, {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json",
+          "X-Admin-Secret": adminSecret
+        },
+        body: JSON.stringify({
+          clientName: name,
+          clientEmail: email,
+          invoiceNo: inv,
+          caseData,
+          paidContent
+        })
+      });
+
+      const data = await resp.json().catch(()=>({}));
+      if(!data.ok){
+        showModal("Publish 실패", escapeHtml(data.error || "알 수 없는 오류"));
+        return;
+      }
+
+      const caseId = data.caseId;
+      const caseUrl = data.caseUrl; // worker가 만들어줌
+      showModal(
+        "Publish 성공",
+        `케이스가 저장되었습니다.<br><br>
+         <strong>의뢰인 링크</strong><br>
+         <div class="paid" style="margin-top:8px;">
+           ${escapeHtml(caseUrl)}
+         </div>
+         (case.html에 자동으로 연결되는 주소입니다)`
+      );
+
+    }catch(e){
+      showModal("서버 연결 오류", "Worker에 연결할 수 없습니다. WORKER_BASE_URL과 CORS 설정을 확인하세요.");
+    }
+  }
+
+  document.getElementById("publishBtn").addEventListener("click", publishCase);
+
+  // Init
+  render();
+  updateAll();
+</script>
+</body>
+</html>
