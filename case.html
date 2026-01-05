@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>NIW 이니셜 평가 분석표 | Law Office of Hong-min Jun</title>
+  <meta name="description" content="NIW 이니셜 평가 분석표(무료: 점수/요약 · 유료: 전략 메모/보완 체크리스트) - Law Office of Hong-min Jun" />
+  <style>
+    :root{
+      --bg:#ffffff;
+      --panel:#ffffff;
+      --text:#111827;
+      --muted:#6b7280;
+      --border:rgba(17,24,39,.12);
+
+      --primary:#5b8cff;
+      --primary2:#3d6df2;
+      --accent:#f5d18a;
+      --accent2:#e8b65e;
+
+      --ok:#16a34a;
+      --warn:#d97706;
+      --danger:#dc2626;
+
+      --shadow: 0 12px 36px rgba(17,24,39,.10);
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
+      background: var(--bg);
+      color:var(--text);
+    }
+    .container{max-width:1120px; margin:0 auto; padding:0 18px}
+
+    header{padding:18px 0 10px}
+    .brandbar{
+      display:flex; align-items:flex-start; justify-content:space-between;
+      gap:14px; flex-wrap:wrap;
+      padding:14px 16px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.92);
+      border-radius:20px;
+      box-shadow: var(--shadow);
+    }
+    .brand-title .name{font-weight:950; letter-spacing:-.2px; font-size:16px; line-height:1.2}
+    .brand-title .motto{color:var(--muted); font-size:12.5px; line-height:1.25; margin-top:3px}
+    .brand-title .licenses{color:rgba(17,24,39,.70); font-size:12px; line-height:1.25; margin-top:2px}
+    .brand-right{display:flex; align-items:center; gap:10px; flex-wrap:wrap; justify-content:flex-end}
+    .contact-pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.03);
+      color:rgba(17,24,39,.78);
+      font-size:12px; white-space:nowrap;
+    }
+    .contact-pill strong{color:var(--text)}
+    .contact-pill .dot{
+      width:6px; height:6px; border-radius:50%;
+      background: var(--accent2);
+      box-shadow:0 0 0 5px rgba(232,182,94,.18);
+    }
+
+    .pagehead{padding:14px 0 6px}
+    h1{margin:0; font-size:22px; letter-spacing:-.4px}
+    .subtitle{
+      margin-top:6px;
+      color:rgba(17,24,39,.70);
+      font-size:13px; line-height:1.45; max-width: 980px;
+    }
+    .topbar{
+      margin-top:12px;
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px; border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      color:rgba(17,24,39,.72);
+      font-size:12px;
+    }
+    .pill strong{color:var(--text)}
+    .btn{
+      cursor:pointer;
+      border:1px solid rgba(17,24,39,.15);
+      background:#fff;
+      color:var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:900;
+      font-size:13px;
+      transition:.15s;
+      box-shadow: 0 10px 24px rgba(17,24,39,.07);
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      background:linear-gradient(180deg, rgba(91,140,255,.95), rgba(61,109,242,.88));
+      border-color:rgba(61,109,242,.35);
+      color:#fff;
+    }
+    .btn.gold{
+      background:linear-gradient(180deg, rgba(245,209,138,.98), rgba(232,182,94,.92));
+      border-color:rgba(232,182,94,.45);
+      color:#111827;
+    }
+    .btn.danger{
+      background:linear-gradient(180deg, rgba(239,68,68,.95), rgba(220,38,38,.88));
+      border-color:rgba(220,38,38,.35);
+      color:#fff;
+    }
+
+    main{padding:10px 0 44px}
+    .card{
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius: var(--radius);
+      padding:14px 14px 12px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      margin-bottom:12px;
+    }
+    .card h2{
+      margin:0 0 10px;
+      font-size:15px;
+      letter-spacing:-.1px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:10px;
+    }
+    .score{
+      color:rgba(17,24,39,.70);
+      font-size:12px;
+      font-weight:900;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      padding:6px 10px;
+      border-radius:999px;
+      white-space:nowrap;
+    }
+
+    .summary{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap:12px;
+      align-items:start;
+    }
+    @media (min-width: 980px){
+      .summary{grid-template-columns: 1.35fr .65fr;}
+    }
+    .kpi{display:flex; gap:10px; flex-wrap:wrap; margin-top:8px}
+    .result{
+      margin-top:10px;
+      padding:12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      line-height:1.5;
+      color:rgba(17,24,39,.80);
+      font-size:13px;
+    }
+    .divider{height:1px; background:rgba(17,24,39,.08); margin:10px 0}
+    .tiny{font-size:11.5px; color:rgba(17,24,39,.55)}
+    .tag{
+      display:inline-block;
+      padding:4px 8px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      color:rgba(17,24,39,.70);
+      font-size:11px;
+      font-weight:800;
+    }
+
+    /* paid */
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid rgba(91,140,255,.30);
+      background:rgba(91,140,255,.10);
+      color:rgba(17,24,39,.85);
+      font-size:12px;
+      font-weight:950;
+      margin-top:2px;
+    }
+    .paid{
+      border-radius:14px;
+      border:1px dashed rgba(232,182,94,.70);
+      background:rgba(245,209,138,.18);
+      padding:14px 16px;
+      margin-top:10px;
+      color:rgba(17,24,39,.92);
+      font-size:13px;
+      line-height:1.6;
+      word-break:break-word;
+    }
+    .paid.locked{
+      filter: blur(7px);
+      user-select:none;
+      pointer-events:none;
+    }
+
+    /* lock overlay */
+    .memo-wrap{position:relative}
+    .lock-overlay{
+      position:absolute; inset:0;
+      display:flex; align-items:center; justify-content:center;
+      padding:10px;
+    }
+    .lock-box{
+      width:100%;
+      max-width:560px;
+      background:#fff;
+      border:1px solid var(--border);
+      border-radius:16px;
+      padding:14px;
+      text-align:left;
+      box-shadow: 0 18px 60px rgba(0,0,0,.12);
+    }
+    .lock-box .title{font-weight:950; letter-spacing:-.2px; margin-bottom:6px;}
+    .lock-box .desc{
+      color:rgba(17,24,39,.70);
+      font-size:12.5px;
+      line-height:1.5;
+      margin-bottom:10px;
+    }
+
+    .codebox{
+      display:flex; gap:8px; align-items:center;
+      padding:8px;
+      border-radius:14px;
+      border:1px solid rgba(232,182,94,.65);
+      background:rgba(245,209,138,.18);
+      flex-wrap:wrap;
+    }
+    .codebox input{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(17,24,39,.15);
+      background:#fff;
+      color:var(--text);
+      min-width:240px;
+      outline:none;
+      font-size:13px;
+    }
+
+    /* section table */
+    table{width:100%; border-collapse:collapse; font-size:13px; table-layout:fixed}
+    th,td{padding:10px 8px; border-top:1px solid rgba(17,24,39,.08); vertical-align:top;}
+    th{text-align:left; color:rgba(17,24,39,.60); font-weight:900;}
+    th:nth-child(1), td:nth-child(1){width:44%;}
+    th:nth-child(2), td:nth-child(2){width:84px;}
+    th:nth-child(3), td:nth-child(3){width:auto;}
+    .yesno{
+      font-weight:900;
+      display:inline-flex; align-items:center; gap:6px;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(17,24,39,.02);
+      font-size:12px;
+    }
+    .yes{color:rgba(22,163,74,.95)}
+    .no{color:rgba(220,38,38,.92)}
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; display:none;
+      align-items:center; justify-content:center;
+      padding:16px;
+      background:rgba(0,0,0,.40);
+      z-index:9999;
+    }
+    .modal-box{
+      width:100%;
+      max-width:560px;
+      border-radius:20px;
+      border:1px solid rgba(255,255,255,.35);
+      background:#fff;
+      box-shadow: 0 24px 80px rgba(0,0,0,.22);
+      padding:14px;
+    }
+    .modal-title{
+      font-weight:950; letter-spacing:-.2px;
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      margin-bottom:6px;
+    }
+    .modal-desc{color:rgba(17,24,39,.80); font-size:13px; line-height:1.55; margin-bottom:10px;}
+    .modal-actions{display:flex; gap:8px; flex-wrap:wrap; justify-content:flex-end;}
+    .xbtn{
+      border:1px solid rgba(17,24,39,.18);
+      background:rgba(17,24,39,.03);
+      border-radius:12px;
+      padding:6px 10px;
+      cursor:pointer;
+      color:rgba(17,24,39,.78);
+      font-weight:900;
+    }
+
+    footer{padding:10px 0 26px; color:rgba(17,24,39,.60); font-size:12px}
+
+    /* ✅ 인쇄 취약점 방지:
+       - LOCKED 상태에서는 paid 영역을 프린트에서 숨김
+       - UNLOCKED 상태에서는 출력 가능(의뢰인이 코드를 입력하고 난 뒤만)
+    */
+    @media print{
+      .modal{display:none !important}
+      .btn, .codebox, .pill{display:none !important}
+      .card{box-shadow:none}
+      body.paid-locked [data-paid]{display:none !important;}
+      body.paid-locked #lockOverlay{display:none !important;}
+    }
+  </style>
+</head>
+
+<body class="paid-locked">
+  <header class="container">
+    <div class="brandbar">
+      <div class="brand-left">
+        <div class="brand-title">
+          <div class="name">Law Office of Hong-min Jun</div>
+          <div class="motto">Attorneys for foreign born individuals and small business owners!</div>
+          <div class="licenses">Indiana · Illinois Attorney</div>
+        </div>
+      </div>
+      <div class="brand-right">
+        <span class="contact-pill"><span class="dot"></span><strong>askus@junlawfirm.com</strong></span>
+        <span class="contact-pill">☎ <strong>847-660-4233</strong></span>
+        <span class="contact-pill">☎ <strong>317-701-2768</strong></span>
+      </div>
+    </div>
+
+    <div class="pagehead">
+      <h1>NIW 이니셜 평가 분석표 <span class="tag">무료: 점수/요약</span> <span class="tag">유료: 전략/체크리스트</span></h1>
+      <div class="subtitle" id="caseMeta">
+        케이스를 불러오는 중입니다…
+      </div>
+
+      <div class="topbar">
+        <span class="pill">전체 점수: <strong id="totalScore">-</strong>/<span id="totalMax">-</span></span>
+        <span class="pill">상태: <strong id="statusText">-</strong></span>
+        <button class="btn" type="button" onclick="window.print()">🖨 인쇄</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card summary">
+      <div>
+        <h2>종합 초기 판단 <span class="score" id="fitBadge">-</span></h2>
+
+        <div class="kpi">
+          <span class="pill">적합성: <strong id="fitLevel">-</strong></span>
+          <span class="pill">보완 후 가능성: <strong id="improveLevel">-</strong></span>
+          <span class="pill">EB-1 전환: <strong id="eb1Level">-</strong></span>
+          <span class="pill">전략적 접근: <strong id="strategyNeed">-</strong></span>
+        </div>
+
+        <div class="result" id="autoResult">-</div>
+
+        <div class="divider"></div>
+        <div class="subtitle" style="font-weight:900; margin-bottom:6px;">총평 메모(무료 공개)</div>
+        <div class="result" id="overallNoteBox">-</div>
+
+        <div class="tiny" style="margin-top:8px;">
+          ※ 본 페이지의 무료 영역은 “초기 점수/요약”이며, 유료 영역은 Unlock Code 입력 시 열립니다.
+        </div>
+      </div>
+
+      <div>
+        <h2>유료 영역 <span class="score" id="paidState">LOCKED</span></h2>
+        <div class="tiny" id="expiryInfo" style="margin-top:-4px;">유효기간: -</div>
+
+        <div class="codebox" style="margin-top:10px;">
+          <input id="codeInput" placeholder="Unlock Code (예: JUN-2026-001-ABCD)" autocomplete="off" />
+          <button class="btn gold" id="applyCodeBtn" type="button">코드 적용</button>
+          <button class="btn danger" id="lockNowBtn" type="button">잠금</button>
+        </div>
+
+        <div class="tiny" style="margin-top:8px;">
+          ※ 결제는 Square에서 처리되며, 본 페이지는 카드 정보를 수집/저장하지 않습니다.
+        </div>
+
+        <div class="memo-wrap" style="margin-top:10px;">
+          <div class="badge">1) 전략 메모(유료)</div>
+          <div class="paid locked" data-paid id="paidStrategy">-</div>
+
+          <div class="badge" style="margin-top:12px;">2) 보완 체크리스트(유료)</div>
+          <div class="paid locked" data-paid id="paidChecklist">-</div>
+
+          <div class="lock-overlay" id="lockOverlay">
+            <div class="lock-box">
+              <div class="title">🔒 유료 영역은 Unlock Code로만 열립니다</div>
+              <div class="desc">
+                Square 인보이스 결제 확인 후 발급되는 <strong>Unlock Code</strong>를 입력해 주세요.<br/>
+                코드가 없으면 전략 메모/보완 체크리스트는 열리지 않습니다.
+              </div>
+              <div class="tiny">※ LOCKED 상태에서는 <strong>인쇄에도 유료 내용이 포함되지 않습니다.</strong></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="sections"></section>
+
+    <footer>
+      <div style="margin-top:10px">
+        © Law Office of Hong-min Jun. This tool provides an initial evaluation framework and does not constitute legal advice.
+      </div>
+    </footer>
+  </main>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-box">
+      <div class="modal-title">
+        <span id="modalTitle">안내</span>
+        <button class="xbtn" id="modalClose">닫기</button>
+      </div>
+      <div class="modal-desc" id="modalDesc">-</div>
+      <div class="modal-actions">
+        <button class="btn" id="modalOk">확인</button>
+      </div>
+    </div>
+  </div>
+
+<script>
+  // =========================================================
+  // 0) Worker URL (본인 Worker URL로 설정)
+  // =========================================================
+  const WORKER_BASE_URL = "https://rough-thunder-0931.junlawfirm.workers.dev";
+
+  // =========================================================
+  // 1) Modal
+  // =========================================================
+  const modal = document.getElementById("modal");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc = document.getElementById("modalDesc");
+  const modalClose = document.getElementById("modalClose");
+  const modalOk = document.getElementById("modalOk");
+
+  function showModal(title, desc){
+    modalTitle.textContent = title;
+    modalDesc.innerHTML = desc;
+    modal.style.display = "flex";
+  }
+  function hideModal(){ modal.style.display = "none"; }
+  modalClose.addEventListener("click", hideModal);
+  modalOk.addEventListener("click", hideModal);
+  modal.addEventListener("click", (e)=>{ if(e.target === modal) hideModal(); });
+
+  function escapeHtml(s){
+    return String(s || "")
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+  }
+
+  // =========================================================
+  // 2) Case 로딩
+  // =========================================================
+  const params = new URLSearchParams(location.search);
+  const caseId = params.get("id");
+
+  if(!caseId){
+    showModal("케이스 오류", "case.html에는 반드시 <strong>?id=CASE_ID</strong>가 필요합니다.");
+  }
+
+  async function fetchCase(){
+    const resp = await fetch(`${WORKER_BASE_URL}/case?id=${encodeURIComponent(caseId)}`, {
+      method:"GET",
+      headers:{ "Accept":"application/json" }
+    });
+    const data = await resp.json().catch(()=>({}));
+    if(!data.ok){
+      throw new Error(data.error || "케이스를 불러올 수 없습니다.");
+    }
+    return data.case;
+  }
+
+  function renderCase(c){
+    document.getElementById("caseMeta").innerHTML =
+      `고객명: <strong>${escapeHtml(c.clientName || "-")}</strong> &nbsp;·&nbsp; 이메일: <strong>${escapeHtml(c.clientEmail || "-")}</strong>`;
+
+    const s = c.caseData?.summary || {};
+    document.getElementById("totalScore").textContent = s.totalChecked ?? "-";
+    document.getElementById("totalMax").textContent = s.totalMax ?? "-";
+    document.getElementById("statusText").textContent = s.status ?? "-";
+    document.getElementById("fitLevel").textContent = s.fitLevel ?? "-";
+    document.getElementById("improveLevel").textContent = s.improveLevel ?? "-";
+    document.getElementById("eb1Level").textContent = s.eb1Level ?? "-";
+    document.getElementById("strategyNeed").textContent = s.strategyNeed ?? "-";
+    document.getElementById("fitBadge").textContent =
+      (s.fitLevel && s.fitLevel.includes("매우")) ? "Strong" :
+      (s.fitLevel && (s.fitLevel.includes("보통") || s.fitLevel.includes("높음"))) ? "Viable" : "Needs work";
+
+    document.getElementById("autoResult").innerHTML = s.autoResultHtml || "-";
+    document.getElementById("overallNoteBox").textContent = c.caseData?.overallNote || "-";
+
+    // 섹션 테이블
+    const sections = c.caseData?.sections || [];
+    const host = document.getElementById("sections");
+    host.innerHTML = "";
+    sections.forEach(sec=>{
+      const card = document.createElement("section");
+      card.className = "card";
+      const max = sec.score?.max ?? 0;
+      const chk = sec.score?.checked ?? 0;
+
+      card.innerHTML = `
+        <h2>${escapeHtml(sec.title || "")} <span class="score">${chk}/${max}</span></h2>
+        <table>
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th>결과</th>
+              <th>비고</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${(sec.items || []).map(it=>{
+              const yes = !!it.checked;
+              return `
+                <tr>
+                  <td>${escapeHtml(it.text)}</td>
+                  <td><span class="yesno ${yes ? "yes" : "no"}">${yes ? "✓" : "✕"}</span></td>
+                  <td class="tiny">—</td>
+                </tr>
+              `;
+            }).join("")}
+          </tbody>
+        </table>
+      `;
+      host.appendChild(card);
+    });
+
+    // 유료 내용(케이스 저장분)
+    const pc = c.paidContent || {};
+    document.getElementById("paidStrategy").innerHTML = pc.strategyMemoHtml ? pc.strategyMemoHtml : "(유료 전략 메모가 비어 있습니다.)";
+    document.getElementById("paidChecklist").innerHTML = pc.checklistHtml ? pc.checklistHtml : "(유료 체크리스트가 비어 있습니다.)";
+  }
+
+  // =========================================================
+  // 3) 유료 잠금/해제 (48시간 토큰)
+  // =========================================================
+  const TOKEN_KEY = "junlawfirm_paid_token_v1";
+  const EXP_KEY   = "junlawfirm_paid_exp_v1";
+
+  function fmtRemaining(ms){
+    if(ms <= 0) return "만료";
+    const totalSec = Math.floor(ms / 1000);
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    if(days > 0) return `${days}일 ${hours}시간 ${mins}분`;
+    return `${hours}시간 ${mins}분`;
+  }
+
+  function setExpiryUI(){
+    const info = document.getElementById("expiryInfo");
+    const exp = Number(localStorage.getItem(EXP_KEY) || 0);
+    if(!exp){ info.textContent = "유효기간: -"; return; }
+    info.textContent = `유효기간: ${fmtRemaining(exp - Date.now())} 남음`;
+  }
+
+  function lockPaid(){
+    document.body.classList.add("paid-locked");
+    document.querySelectorAll("[data-paid]").forEach(el=>el.classList.add("locked"));
+    document.getElementById("lockOverlay").style.display = "flex";
+    document.getElementById("paidState").textContent = "LOCKED";
+    setExpiryUI();
+  }
+
+  function unlockPaid(){
+    document.body.classList.remove("paid-locked");
+    document.querySelectorAll("[data-paid]").forEach(el=>el.classList.remove("locked"));
+    document.getElementById("lockOverlay").style.display = "none";
+    document.getElementById("paidState").textContent = "UNLOCKED";
+    setExpiryUI();
+  }
+
+  function normalizeCode(s){ return (s || "").trim().toUpperCase(); }
+
+  async function applyUnlockCode(code){
+    const v = normalizeCode(code);
+    if(!v){
+      showModal("코드 필요", "Unlock Code를 입력해 주세요.");
+      return;
+    }
+
+    // 케이스 ID를 같이 보냄(Worker에서 로깅/추적 가능)
+    try{
+      const resp = await fetch(`${WORKER_BASE_URL}/redeem`, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ code: v, caseId })
+      });
+      const data = await resp.json().catch(()=>({}));
+      if(!data.ok){
+        showModal("코드 확인", escapeHtml(data.error || "코드가 올바르지 않습니다."));
+        return;
+      }
+
+      localStorage.setItem(TOKEN_KEY, data.token);
+      localStorage.setItem(EXP_KEY, String(data.exp));
+      unlockPaid();
+      showModal("해제 완료", `유료 영역이 열렸습니다.<br>유효기간: <strong>${fmtRemaining(data.exp - Date.now())}</strong>`);
+    }catch(e){
+      showModal("서버 연결 오류", "잠시 후 다시 시도해 주세요.");
+    }
+  }
+
+  async function verifyToken(){
+    const token = (localStorage.getItem(TOKEN_KEY) || "").trim();
+    if(!token){ lockPaid(); return; }
+
+    try{
+      const resp = await fetch(`${WORKER_BASE_URL}/verify`, {
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({ token })
+      });
+      const data = await resp.json().catch(()=>({}));
+      if(!data.ok){ lockPaid(); return; }
+
+      const exp = Number((data.payload && data.payload.exp) || 0);
+      localStorage.setItem(EXP_KEY, String(exp));
+      if(!exp || Date.now() >= exp){ lockPaid(); return; }
+      unlockPaid();
+    }catch(e){
+      lockPaid();
+    }
+  }
+
+  function forceLockNow(){
+    localStorage.removeItem(TOKEN_KEY);
+    localStorage.removeItem(EXP_KEY);
+    lockPaid();
+    showModal("잠금 완료", "유료 영역이 잠겼습니다.");
+  }
+
+  document.getElementById("applyCodeBtn").addEventListener("click", ()=>{
+    applyUnlockCode(document.getElementById("codeInput").value);
+  });
+  document.getElementById("lockNowBtn").addEventListener("click", forceLockNow);
+
+  // =========================================================
+  // 4) Init
+  // =========================================================
+  let CASE = null;
+  (async ()=>{
+    try{
+      CASE = await fetchCase();
+      renderCase(CASE);
+      lockPaid();
+      await verifyToken();
+      setExpiryUI();
+      setInterval(async ()=>{ await verifyToken(); setExpiryUI(); }, 60*1000);
+    }catch(e){
+      showModal("케이스 로딩 실패", escapeHtml(e.message || String(e)));
+    }
+  })();
+</script>
+</body>
+</html>
